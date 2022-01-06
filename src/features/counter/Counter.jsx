@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { decrement, increment, incrementByAmount, incrementAsync, incrementIfOdd, selectCount } from './counterSlice'
 import styles from './Counter.module.css'
-import { Button, Spinner } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import BeatLoader from 'react-spinners/BeatLoader'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 export function Counter() {
     const count = useSelector(selectCount)
@@ -11,8 +13,6 @@ export function Counter() {
     const [incrementAmount, setIncrementAmount] = useState('2')
 
     const incrementValue = Number(incrementAmount) || 0
-
-    // const Loader = () => <BeatLoader color="red" loading size={15} />
 
     return (
         <div>
@@ -43,13 +43,11 @@ export function Counter() {
                 </button>
             </div>
             <div className="test-button">
-                <Button variant="primary" onClick={() => dispatch(increment())}>
-                    Increment
-                </Button>
-            </div>
-            <div>
                 <Button variant="danger" onClick={() => dispatch(decrement())}>
-                    Decrement
+                    <FontAwesomeIcon icon={faMinus}></FontAwesomeIcon>
+                </Button>
+                <Button variant="primary" onClick={() => dispatch(increment())}>
+                    <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
                 </Button>
             </div>
             <div>
