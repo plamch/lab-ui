@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { decrement, increment, incrementByAmount, incrementAsync, incrementIfOdd, selectCount } from './counterSlice'
 import styles from './Counter.module.css'
-import { Button } from 'react-bootstrap'
+import { Button, Spinner } from 'react-bootstrap'
+import BeatLoader from 'react-spinners/BeatLoader'
 
 export function Counter() {
     const count = useSelector(selectCount)
@@ -10,6 +11,8 @@ export function Counter() {
     const [incrementAmount, setIncrementAmount] = useState('2')
 
     const incrementValue = Number(incrementAmount) || 0
+
+    // const Loader = () => <BeatLoader color="red" loading size={15} />
 
     return (
         <div>
@@ -48,6 +51,9 @@ export function Counter() {
                 <Button variant="danger" onClick={() => dispatch(decrement())}>
                     Decrement
                 </Button>
+            </div>
+            <div>
+                <BeatLoader color="red" loading size={15} />{' '}
             </div>
         </div>
     )
