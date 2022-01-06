@@ -6,6 +6,15 @@ import { Button } from 'react-bootstrap'
 import BeatLoader from 'react-spinners/BeatLoader'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
+import Select from 'react-select'
+
+const options = [
+    { value: 'pathology', label: 'Патология' },
+    { value: 'entomology', label: 'Ентомология' },
+    { value: 'seeds', label: 'Семена' },
+    { value: 'physiology', label: 'Физиология' },
+    { value: 'water', label: 'Вода' },
+]
 
 export function Counter() {
     const count = useSelector(selectCount)
@@ -16,6 +25,9 @@ export function Counter() {
 
     return (
         <div>
+            <div>
+                <Select options={options} placeholder="Изберете анализ" isClearable isSearchable />
+            </div>
             <div className={styles.row}>
                 <button className={styles.button} aria-label="Decrement value" onClick={() => dispatch(decrement())}>
                     -
@@ -44,14 +56,14 @@ export function Counter() {
             </div>
             <div className="test-button">
                 <Button variant="danger" onClick={() => dispatch(decrement())}>
-                    <FontAwesomeIcon icon={faMinus}></FontAwesomeIcon>
+                    <FontAwesomeIcon icon={faMinus} />
                 </Button>
                 <Button variant="primary" onClick={() => dispatch(increment())}>
-                    <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
+                    <FontAwesomeIcon icon={faPlus} />
                 </Button>
             </div>
             <div>
-                <BeatLoader color="red" loading size={15} />{' '}
+                <BeatLoader color="red" loading size={15} />
             </div>
         </div>
     )
