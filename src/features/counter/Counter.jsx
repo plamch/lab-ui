@@ -10,6 +10,7 @@ import Select from 'react-select'
 import { ToastContainer, toast, Slide, Flip } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
+import classnames from 'classnames'
 
 const options = [
     { value: 'pathology', label: 'Патология' },
@@ -78,7 +79,7 @@ export function Counter() {
                     Add If Odd
                 </button>
             </div>
-            <div className="test-button">
+            <div className={classnames('test-buttons', 'math-operations-buttons')}>
                 <Button variant="danger" onClick={subtraction}>
                     <FontAwesomeIcon icon={faMinus} />
                 </Button>
