@@ -1,4 +1,4 @@
-The source code contained in this listing is proprietary to konsept Sàrl.
+The source code contained in this listing is proprietary to plam.ch.
 
 Unauthorized copying, adaptation, distribution, use, or display is strictly prohibited.
-This software is Copyright 2021 konsept Sàrl.
+This software is Copyright 2021 plam.ch.

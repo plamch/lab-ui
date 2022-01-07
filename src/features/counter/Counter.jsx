@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import Select from 'react-select'
 import { ToastContainer, toast, Slide, Flip } from 'react-toastify'
-
 import 'react-toastify/dist/ReactToastify.css'
 import classnames from 'classnames'
 

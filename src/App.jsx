@@ -2,10 +2,16 @@ import React from 'react'
 import logo from './logo.svg'
 import { Counter } from './features/counter/Counter'
 import './App.scss'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 function App() {
     return (
         <div className="App">
+            <HelmetProvider>
+                <Helmet>
+                    <title>Lab Management</title>
+                </Helmet>
+            </HelmetProvider>
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
                 <Counter />
