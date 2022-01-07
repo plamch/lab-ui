@@ -9,25 +9,25 @@ import { Helmet, HelmetProvider } from 'react-helmet-async'
 function App() {
     return (
         <div className="App">
-            <Router>
-                <div>
-                    <ul>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/about">About</Link>
-                        </li>
-                    </ul>
-                    <Routes>
-                        <Route path="/about" element={<About />} />
-                    </Routes>
-                </div>
-            </Router>
             <HelmetProvider>
                 <Helmet>
                     <title>Lab Management</title>
                 </Helmet>
+                <Router>
+                    <div>
+                        <ul>
+                            <li>
+                                <Link to="/">Home</Link>
+                            </li>
+                            <li>
+                                <Link to="/about">About</Link>
+                            </li>
+                        </ul>
+                        <Routes>
+                            <Route path="/about" element={<About />} />
+                        </Routes>
+                    </div>
+                </Router>
             </HelmetProvider>
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
