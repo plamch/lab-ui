@@ -4,6 +4,7 @@ import './App.scss'
 import { Counter } from './features/counter/Counter'
 import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { About } from './About'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 function App() {
     return (
@@ -23,6 +24,11 @@ function App() {
                     </Routes>
                 </div>
             </Router>
+            <HelmetProvider>
+                <Helmet>
+                    <title>Lab Management</title>
+                </Helmet>
+            </HelmetProvider>
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
                 <Counter />
