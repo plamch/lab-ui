@@ -19,8 +19,7 @@ function App() {
                         </li>
                     </ul>
                     <Routes>
-                        <Route path="/" component={<App />} />
-                        <Route path="/about" component={<About />} />
+                        <Route path="/about" element={<About />} />
                     </Routes>
                 </div>
             </Router>
