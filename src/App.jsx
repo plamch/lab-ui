@@ -1,7 +1,9 @@
 import React from 'react'
 import logo from './logo.svg'
-import { Counter } from './features/counter/Counter'
 import './App.scss'
+import { Counter } from './features/counter/Counter'
+import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import { About } from './About'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 function App() {
@@ -11,6 +13,21 @@ function App() {
                 <Helmet>
                     <title>Lab Management</title>
                 </Helmet>
+                <Router>
+                    <div>
+                        <ul>
+                            <li>
+                                <Link to="/">Home</Link>
+                            </li>
+                            <li>
+                                <Link to="/about">About</Link>
+                            </li>
+                        </ul>
+                        <Routes>
+                            <Route path="/about" element={<About />} />
+                        </Routes>
+                    </div>
+                </Router>
             </HelmetProvider>
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />

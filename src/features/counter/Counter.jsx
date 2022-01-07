@@ -26,13 +26,10 @@ export function Counter() {
 
     const incrementValue = Number(incrementAmount) || 0
 
-    const notifyAddition = () =>
-        toast('You added 1 to the count', { autoClose: 3000, closeOnClick: true, draggable: true, transition: Slide })
+    const notifyAddition = () => toast('You added 1 to the count', { draggable: true, transition: Slide })
 
     const notifySubtraction = () =>
         toast('You subtracted 1 from the count', {
-            autoClose: 3000,
-            closeOnClick: true,
             draggable: true,
             transition: Flip,
         })
