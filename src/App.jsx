@@ -1,14 +1,15 @@
-import React from 'react'
 import logo from './logo.svg'
 import './App.scss'
 import { Counter } from './features/counter/Counter'
 import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { About } from './About'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
+import { ToastContainer } from 'react-toastify'
 
 function App() {
     return (
         <div className="App">
+            <ToastContainer autoClose={3000} closeOnClick />
             <HelmetProvider>
                 <Helmet>
                     <title>Lab Management</title>
@@ -32,9 +33,6 @@ function App() {
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
                 <Counter />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
                 <span>
                     <span>Learn </span>
                     <a className="App-link" href="https://reactjs.org/" target="_blank" rel="noopener noreferrer">

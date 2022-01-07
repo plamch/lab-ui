@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { decrement, increment, incrementByAmount, incrementAsync, incrementIfOdd, selectCount } from './counterSlice'
 import styles from './Counter.module.css'
@@ -7,8 +7,7 @@ import BeatLoader from 'react-spinners/BeatLoader'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import Select from 'react-select'
-import { ToastContainer, toast, Slide, Flip } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { toast, Slide, Flip } from 'react-toastify'
 import classnames from 'classnames'
 
 const options = [
@@ -26,11 +25,10 @@ export function Counter() {
 
     const incrementValue = Number(incrementAmount) || 0
 
-    const notifyAddition = () => toast('You added 1 to the count', { draggable: true, transition: Slide })
+    const notifyAddition = () => toast('You added 1 to the count', { transition: Slide })
 
     const notifySubtraction = () =>
         toast('You subtracted 1 from the count', {
-            draggable: true,
             transition: Flip,
         })
 
@@ -82,7 +80,6 @@ export function Counter() {
                 <Button variant="primary" onClick={addition}>
                     <FontAwesomeIcon icon={faPlus} />
                 </Button>
-                <ToastContainer autoClose={3000} closeOnClick />
             </div>
             <div>
                 <BeatLoader color="red" loading size={15} />
