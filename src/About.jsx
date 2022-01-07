@@ -1,9 +1,15 @@
 import React from 'react'
+import { Helmet } from 'react-helmet-async'
 
 export function About() {
     return (
-        <div>
-            <p>There's nothing to see here yet</p>
-        </div>
+        <>
+            <Helmet>
+                <title>About Lab</title>
+            </Helmet>
+            <div>
+                <p>There's nothing to see here yet</p>
+            </div>
+        </>
     )
 }
