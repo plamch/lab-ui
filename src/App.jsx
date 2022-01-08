@@ -6,6 +6,7 @@ import { About } from './About'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { ToastContainer } from 'react-toastify'
 import { Grid } from './features/Grid'
+import { Calendar } from './features/Calendar'
 
 function App() {
     return (
@@ -27,10 +28,14 @@ function App() {
                             <li>
                                 <Link to="/grid">Grid</Link>
                             </li>
+                            <li>
+                                <Link to="/calendar">Calendar</Link>
+                            </li>
                         </ul>
                         <Routes>
                             <Route path="/about" element={<About />} />
                             <Route path="/grid" element={<Grid />} />
+                            <Route path="/calendar" element={<Calendar />} />
                         </Routes>
                     </div>
                 </Router>
@@ -67,6 +72,7 @@ function App() {
                     </a>
                 </span>
                 <Grid />
+                <Calendar />
             </header>
         </div>
     )
