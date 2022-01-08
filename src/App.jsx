@@ -1,10 +1,9 @@
-import logo from './logo.svg'
 import './App.scss'
-import { Counter } from './features/counter/Counter'
 import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { About } from './About'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { ToastContainer } from 'react-toastify'
+import { Home } from './features/Home'
 import { Grid } from './features/Grid'
 import { Calendar } from './features/Calendar'
 
@@ -41,36 +40,7 @@ function App() {
                 </Router>
             </HelmetProvider>
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <Counter />
-                <span>
-                    <span>Learn </span>
-                    <a className="App-link" href="https://reactjs.org/" target="_blank" rel="noopener noreferrer">
-                        React
-                    </a>
-                    <span>, </span>
-                    <a className="App-link" href="https://redux.js.org/" target="_blank" rel="noopener noreferrer">
-                        Redux
-                    </a>
-                    <span>, </span>
-                    <a
-                        className="App-link"
-                        href="https://redux-toolkit.js.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Redux Toolkit
-                    </a>
-                    ,<span> and </span>
-                    <a
-                        className="App-link"
-                        href="https://react-redux.js.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        React Redux
-                    </a>
-                </span>
+                <Home />
                 <Grid />
                 <Calendar />
             </header>

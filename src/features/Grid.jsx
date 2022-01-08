@@ -6,6 +6,7 @@ export const Grid = () => {
         { make: 'Ford', model: 'Mondeo', price: 32000 },
         { make: 'Porsche', model: '911', price: 72000 },
     ]
+
     return (
         <div className="ag-theme-alpine-dark" style={{ height: 200, width: 600 }}>
             <AgGridReact rowData={rowData}>
