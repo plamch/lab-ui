@@ -19,8 +19,10 @@ export const Calendar = () => (
                 { title: 'lesson', start: '2022-01-13T12:30:00', end: '2022-01-13T14:30:00' },
             ]}
             dateClick={handleDateClick}
-            editable="true"
-            eventDurationEditable="true"
+            editable
+            eventDurationEditable
+            selectable
+            weekNumbers
         />
     </>
 )
