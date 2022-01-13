@@ -1,3 +1,16 @@
 li {
     list-style-type: none;
 }
+
+a:hover {
+    cursor: pointer;
+}
+
+.main-menu {
+    display: flex;
+    justify-content: center;
+
+    li {
+        padding: 5px;
+    }
+}

@@ -17,7 +17,7 @@ function App() {
                 </Helmet>
                 <Router>
                     <div>
-                        <ul>
+                        <ul className="main-menu">
                             <li>
                                 <Link to="/">Home</Link>
                             </li>
@@ -32,6 +32,7 @@ function App() {
                             </li>
                         </ul>
                         <Routes>
+                            <Route path="/" element={<Home />} />
                             <Route path="/about" element={<About />} />
                             <Route path="/grid" element={<Grid />} />
                             <Route path="/calendar" element={<Calendar />} />
@@ -39,11 +40,6 @@ function App() {
                     </div>
                 </Router>
             </HelmetProvider>
-            <header className="App-header">
-                <Home />
-                <Grid />
-                <Calendar />
-            </header>
         </div>
     )
 }
