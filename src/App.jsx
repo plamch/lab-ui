@@ -1,11 +1,11 @@
 import './App.scss'
 import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom'
-import { About } from './About'
+import { About } from './pages/AboutPage'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { ToastContainer } from 'react-toastify'
-import { Home } from './features/Home'
-import { Grid } from './features/Grid'
-import { Calendar } from './features/Calendar'
+import { Home } from './pages/HomePage'
+import { Grid } from './pages/GridPage'
+import { Calendar } from './pages/CalendarPage'
 
 function App() {
     return (

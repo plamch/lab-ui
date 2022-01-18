@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 import logo from '../logo.svg'
-import { Counter } from './counter/Counter'
+import { Counter } from '../features/counter/Counter'
 
 export const Home = () => (
     <>
