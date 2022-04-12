@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 import { useState } from 'react'
-import { Button, Collapse } from 'react-bootstrap'
+import { Button, Collapse, Modal } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 
 export function About() {
@@ -12,6 +12,8 @@ export function About() {
     // const [openGreeting, setOpenGreeting] = useState(false)
     const [openUsers, setOpenUsers] = useState(false)
     const [openAdmins, setOpenAdmins] = useState(false)
+    const [isEditUserModalVisible, setEditUserModalVisible] = useState(false)
+    const [selectedUserId, setSelectedUserId] = useState('')
 
     const onCreateUserClick = async () => {
         const response = await fetch('http://localhost:4000/users', {
@@ -54,6 +56,13 @@ export function About() {
     //     setGreeting(helloText.allUsers)
     // }
 
+    const onEditUserButtonClick =
+        ({ id }) =>
+        () => {
+            setSelectedUserId(id)
+            setEditUserModalVisible(true)
+        }
+
     const onDeleteUserButtonClick =
         ({ id }) =>
         async () => {
@@ -62,11 +71,31 @@ export function About() {
             })
         }
 
+    const closeEditUserModal = () => {
+        setEditUserModalVisible(false)
+    }
+
+    const onSaveUserButtonClick = async () => {}
+
     return (
         <>
             <Helmet>
                 <title>About Lab</title>
             </Helmet>
+            <Modal show={isEditUserModalVisible} onHide={closeEditUserModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{users.find((user) => user.id === selectedUserId)?.name}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={closeEditUserModal}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={onSaveUserButtonClick}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <div className="test-buttons">
                 <label>
                     Username:
@@ -87,7 +116,12 @@ export function About() {
                         {users.map((user) => (
                             <p key={user.id}>
                                 {user.name} &lt;{user.email}&gt;
-                                <Button onClick={onDeleteUserButtonClick({ id: user.id })}>Delete</Button>
+                                <Button variant="secondary" onClick={onEditUserButtonClick({ id: user.id })}>
+                                    Edit
+                                </Button>
+                                <Button variant="danger" onClick={onDeleteUserButtonClick({ id: user.id })}>
+                                    Delete
+                                </Button>
                             </p>
                         ))}
                     </div>
