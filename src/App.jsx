@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify'
 import { Home } from './pages/HomePage'
 import { Grid } from './pages/GridPage'
 import { Calendar } from './pages/CalendarPage'
+import { Container } from 'react-bootstrap'
 
 function App() {
     return (
@@ -31,12 +32,14 @@ function App() {
                                 <Link to="/calendar">Calendar</Link>
                             </li>
                         </ul>
-                        <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/about" element={<About />} />
-                            <Route path="/grid" element={<Grid />} />
-                            <Route path="/calendar" element={<Calendar />} />
-                        </Routes>
+                        <Container>
+                            <Routes>
+                                <Route path="/" element={<Home />} />
+                                <Route path="/about" element={<About />} />
+                                <Route path="/grid" element={<Grid />} />
+                                <Route path="/calendar" element={<Calendar />} />
+                            </Routes>
+                        </Container>
                     </div>
                 </Router>
             </HelmetProvider>

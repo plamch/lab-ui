@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 import { useState } from 'react'
-import { Button, Collapse, Modal } from 'react-bootstrap'
+import { Button, Collapse, Modal, Form } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 
 export function About() {
@@ -14,6 +14,10 @@ export function About() {
     const [openAdmins, setOpenAdmins] = useState(false)
     const [isEditUserModalVisible, setEditUserModalVisible] = useState(false)
     const [selectedUserId, setSelectedUserId] = useState('')
+    const [editNameField, setEditNameField] = useState('')
+    const [editEmailField, setEditEmailField] = useState('')
+
+    const findSelectedUser = (id) => users.find((user) => user.id === id)
 
     const onCreateUserClick = async () => {
         const response = await fetch('http://localhost:4000/users', {
@@ -36,7 +40,7 @@ export function About() {
     }
 
     const onShowUsersClick = async () => {
-        setOpenUsers(!openUsers)
+        setOpenUsers(true)
         const allUsersResponse = await fetch('http://localhost:4000/users')
         const usersJson = await allUsersResponse.json()
         setUsers(usersJson)
@@ -60,6 +64,9 @@ export function About() {
         ({ id }) =>
         () => {
             setSelectedUserId(id)
+            const newSelectedUser = findSelectedUser(id)
+            setEditNameField(newSelectedUser.name)
+            setEditEmailField(newSelectedUser.email)
             setEditUserModalVisible(true)
         }
 
@@ -69,13 +76,26 @@ export function About() {
             const response = await fetch(`http://localhost:4000/users?id=${id}`, {
                 method: 'delete',
             })
+            onShowUsersClick()
         }
 
     const closeEditUserModal = () => {
         setEditUserModalVisible(false)
     }
 
-    const onSaveUserButtonClick = async () => {}
+    const onUserFormSubmit = async (event) => {
+        event.preventDefault()
+        const response = await fetch(`http://localhost:4000/users/${selectedUserId}`, {
+            method: 'put',
+            body: JSON.stringify({ name: editNameField, email: editEmailField }),
+            headers: { 'content-type': 'application/json' },
+        })
+    }
+
+    const onUserCreateFormSubmit = async (event) => {
+        event.preventDefault()
+        onCreateUserClick()
+    }
 
     return (
         <>
@@ -84,30 +104,74 @@ export function About() {
             </Helmet>
             <Modal show={isEditUserModalVisible} onHide={closeEditUserModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{users.find((user) => user.id === selectedUserId)?.name}</Modal.Title>
+                    <Modal.Title>{findSelectedUser(selectedUserId)?.name}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                <Modal.Body>
+                    <Form onSubmit={onUserFormSubmit}>
+                        <Form.Group className="mb-3" controlId="username">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control
+                                value={editNameField}
+                                onChange={(event) => setEditNameField(event.target.value)}
+                                type="text"
+                                placeholder="Username"
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control
+                                value={editEmailField}
+                                onChange={(event) => setEditEmailField(event.target.value)}
+                                type="email"
+                                placeholder="Enter email"
+                            />
+                        </Form.Group>
+
+                        <Button variant="primary" type="submit">
+                            Apply
+                        </Button>
+                    </Form>
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={closeEditUserModal}>
-                        Close
+                        Cancel
                     </Button>
-                    <Button variant="primary" onClick={onSaveUserButtonClick}>
+                    {/* <Button variant="primary" onClick={onSaveUserButtonClick}>
                         Save Changes
-                    </Button>
+                    </Button> */}
                 </Modal.Footer>
             </Modal>
             <div className="test-buttons">
-                <label>
-                    Username:
-                    <input type="text" name="profileName" onChange={(e) => setName(e.target.value)} value={name} />
-                </label>
-                <label>
-                    Email:
-                    <input type="email" name="profileEmail" onChange={(e) => setEmail(e.target.value)} value={email} />
-                </label>
-                <Button onClick={onCreateUserClick} className="fetch-button">
-                    Create user
-                </Button>
+                <Form onSubmit={onUserCreateFormSubmit}>
+                    <Form.Group className="mb-3" controlId="username">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control
+                            value={name}
+                            onChange={(event) => setName(event.target.value)}
+                            type="text"
+                            placeholder="Username"
+                            isInvalid={name.length === 0}
+                        />
+                        <Form.Control.Feedback type="invalid">Invalid username</Form.Control.Feedback>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
+                            type="email"
+                            placeholder="Enter email"
+                            isInvalid={email.length === 0}
+                        />
+                        <Form.Control.Feedback type="invalid">Invalid email</Form.Control.Feedback>
+                    </Form.Group>
+
+                    <Button variant="primary" type="submit" className="mb-1">
+                        Create
+                    </Button>
+                </Form>
                 <Button onClick={onShowUsersClick} className="fetch-button">
                     Show all users
                 </Button>
