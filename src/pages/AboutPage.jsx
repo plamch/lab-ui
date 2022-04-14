@@ -16,6 +16,7 @@ export function About() {
     const [selectedUserId, setSelectedUserId] = useState('')
     const [editNameField, setEditNameField] = useState('')
     const [editEmailField, setEditEmailField] = useState('')
+    const [areUsersLoading, setUsersLoading] = useState(false)
 
     const findSelectedUser = (id) => users.find((user) => user.id === id)
 
@@ -40,10 +41,12 @@ export function About() {
     }
 
     const onShowUsersClick = async () => {
-        setOpenUsers(true)
+        // setOpenUsers(true)
+        setUsersLoading(true)
         const allUsersResponse = await fetch('http://localhost:4000/users')
         const usersJson = await allUsersResponse.json()
         setUsers(usersJson)
+        setUsersLoading(false)
     }
 
     const onShowAdminsClick = async () => {
@@ -83,7 +86,7 @@ export function About() {
         setEditUserModalVisible(false)
     }
 
-    const onUserFormSubmit = async (event) => {
+    const onUserEditFormSubmit = async (event) => {
         event.preventDefault()
         const response = await fetch(`http://localhost:4000/users/${selectedUserId}`, {
             method: 'put',
@@ -107,7 +110,7 @@ export function About() {
                     <Modal.Title>{findSelectedUser(selectedUserId)?.name}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={onUserFormSubmit}>
+                    <Form onSubmit={onUserEditFormSubmit}>
                         <Form.Group className="mb-3" controlId="username">
                             <Form.Label>Username</Form.Label>
                             <Form.Control
@@ -175,21 +178,22 @@ export function About() {
                 <Button onClick={onShowUsersClick} className="fetch-button">
                     Show all users
                 </Button>
-                <Collapse in={openUsers}>
-                    <div>
-                        {users.map((user) => (
-                            <p key={user.id}>
-                                {user.name} &lt;{user.email}&gt;
-                                <Button variant="secondary" onClick={onEditUserButtonClick({ id: user.id })}>
-                                    Edit
-                                </Button>
-                                <Button variant="danger" onClick={onDeleteUserButtonClick({ id: user.id })}>
-                                    Delete
-                                </Button>
-                            </p>
-                        ))}
-                    </div>
-                </Collapse>
+                {/* <Collapse in={openUsers}> */}
+                <div>
+                    {areUsersLoading && <p className="loader">Loading...</p>}
+                    {users.map((user) => (
+                        <p key={user.id}>
+                            {user.name} &lt;{user.email}&gt;
+                            <Button variant="secondary" onClick={onEditUserButtonClick({ id: user.id })}>
+                                Edit
+                            </Button>
+                            <Button variant="danger" onClick={onDeleteUserButtonClick({ id: user.id })}>
+                                Delete
+                            </Button>
+                        </p>
+                    ))}
+                </div>
+                {/* </Collapse> */}
                 <Button onClick={onShowAdminsClick} className="fetch-button">
                     Show admins
                 </Button>
