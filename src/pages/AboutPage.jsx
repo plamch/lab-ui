@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async'
 import { useState } from 'react'
 import { Button, Collapse, Modal, Form } from 'react-bootstrap'
 import { toast } from 'react-toastify'
-import { useGetUsersQuery } from '../services/users'
+import { useGetUsersQuery, useCreateUserMutation } from '../services/users'
 
 export function About() {
     const [greeting, setGreeting] = useState('hi')
@@ -17,7 +17,7 @@ export function About() {
     const [selectedUserId, setSelectedUserId] = useState('')
     const [editNameField, setEditNameField] = useState('')
     const [editEmailField, setEditEmailField] = useState('')
-    const [isUserCreationLoading, setUserCreationLoading] = useState(false)
+    // const [isUserCreationLoading, setUserCreationLoading] = useState(false)
 
     const {
         data: usersData,
@@ -25,25 +25,18 @@ export function About() {
         refetch: refetchUsers,
     } = useGetUsersQuery(null, { refetchOnMountOrArgChange: true })
 
+    const [createUser, { isLoading: isUserCreationLoading }] = useCreateUserMutation()
+
     const findSelectedUser = (id) => usersData?.find((user) => user.id === id)
 
     const onCreateUserClick = async () => {
-        setUserCreationLoading(true)
-        const response = await fetch('http://localhost:4000/users', {
-            method: 'post',
-            body: JSON.stringify({ name, email }),
-            headers: { 'content-type': 'application/json' },
-        })
+        const { error } = await createUser({ name, email })
 
-        const result = await response.json()
-        setUserCreationLoading(false)
-        console.log(result)
-
-        if (result === 'Ok') {
+        if (typeof error === 'undefined') {
             setName('')
             setEmail('')
             toast.success('User created')
-            onShowUsersClick()
+            refetchUsers()
         } else {
             toast.error('Choose unique email')
         }
