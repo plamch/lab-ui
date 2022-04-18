@@ -2,10 +2,11 @@ import { Helmet } from 'react-helmet-async'
 import { useState } from 'react'
 import { Button, Collapse, Modal, Form } from 'react-bootstrap'
 import { toast } from 'react-toastify'
+import { useGetUsersQuery } from '../services/users'
 
 export function About() {
     const [greeting, setGreeting] = useState('hi')
-    const [users, setUsers] = useState([])
+    // const [users, setUsers] = useState([])
     const [admins, setAdmins] = useState([])
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -16,11 +17,18 @@ export function About() {
     const [selectedUserId, setSelectedUserId] = useState('')
     const [editNameField, setEditNameField] = useState('')
     const [editEmailField, setEditEmailField] = useState('')
-    const [areUsersLoading, setUsersLoading] = useState(false)
+    const [isUserCreationLoading, setUserCreationLoading] = useState(false)
 
-    const findSelectedUser = (id) => users.find((user) => user.id === id)
+    const {
+        data: usersData,
+        isFetching: areUsersFetching,
+        refetch: refetchUsers,
+    } = useGetUsersQuery(null, { refetchOnMountOrArgChange: true })
+
+    const findSelectedUser = (id) => usersData?.find((user) => user.id === id)
 
     const onCreateUserClick = async () => {
+        setUserCreationLoading(true)
         const response = await fetch('http://localhost:4000/users', {
             method: 'post',
             body: JSON.stringify({ name, email }),
@@ -28,6 +36,7 @@ export function About() {
         })
 
         const result = await response.json()
+        setUserCreationLoading(false)
         console.log(result)
 
         if (result === 'Ok') {
@@ -42,11 +51,12 @@ export function About() {
 
     const onShowUsersClick = async () => {
         // setOpenUsers(true)
-        setUsersLoading(true)
-        const allUsersResponse = await fetch('http://localhost:4000/users')
-        const usersJson = await allUsersResponse.json()
-        setUsers(usersJson)
-        setUsersLoading(false)
+        // setUsersLoading(true)
+        // const allUsersResponse = await fetch('http://localhost:4000/users')
+        // const usersJson = await allUsersResponse.json()
+        // setUsers(usersJson)
+        // setUsersLoading(false)
+        refetchUsers()
     }
 
     const onShowAdminsClick = async () => {
@@ -79,7 +89,7 @@ export function About() {
             const response = await fetch(`http://localhost:4000/users?id=${id}`, {
                 method: 'delete',
             })
-            onShowUsersClick()
+            refetchUsers()
         }
 
     const closeEditUserModal = () => {
@@ -118,7 +128,9 @@ export function About() {
                                 onChange={(event) => setEditNameField(event.target.value)}
                                 type="text"
                                 placeholder="Username"
+                                isInvalid={editNameField.length === 0}
                             />
+                            <Form.Control.Feedback type="invalid">Invalid username</Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -128,7 +140,9 @@ export function About() {
                                 onChange={(event) => setEditEmailField(event.target.value)}
                                 type="email"
                                 placeholder="Enter email"
+                                isInvalid={editEmailField.length === 0}
                             />
+                            <Form.Control.Feedback type="invalid">Invalid email</Form.Control.Feedback>
                         </Form.Group>
 
                         <Button variant="primary" type="submit">
@@ -174,14 +188,15 @@ export function About() {
                     <Button variant="primary" type="submit" className="mb-1">
                         Create
                     </Button>
+                    {isUserCreationLoading && <p className="loader">Loading...</p>}
                 </Form>
                 <Button onClick={onShowUsersClick} className="fetch-button">
                     Show all users
                 </Button>
                 {/* <Collapse in={openUsers}> */}
                 <div>
-                    {areUsersLoading && <p className="loader">Loading...</p>}
-                    {users.map((user) => (
+                    {areUsersFetching && <p className="loader">Fetching...</p>}
+                    {usersData?.map((user) => (
                         <p key={user.id}>
                             {user.name} &lt;{user.email}&gt;
                             <Button variant="secondary" onClick={onEditUserButtonClick({ id: user.id })}>
